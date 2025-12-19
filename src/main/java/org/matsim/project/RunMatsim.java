@@ -33,6 +33,12 @@ public class RunMatsim{
 
 	public static void main(String[] args) {
 
+
+		// -------- Define run --------
+		String run = "equil_3";
+		
+		
+		// -------- Config --------
 		Config config;
 		if ( args==null || args.length==0 || args[0]==null ){
 			config = ConfigUtils.loadConfig( "scenarios/equil/config.xml" );
@@ -40,29 +46,18 @@ public class RunMatsim{
 			config = ConfigUtils.loadConfig( args );
 		}
 
-		config.controller().setOverwriteFileSetting( OverwriteFileSetting.deleteDirectoryIfExists );
 
-		// possibly modify config here!!
+		// -------- Modify config --------
+		config.controller().setOverwriteFileSetting( OverwriteFileSetting.deleteDirectoryIfExists );		
+		config.controller().setOutputDirectory("./output/output_" + run);
 
-		// ---
-		
+
+		// -------- Scenario --------
 		Scenario scenario = ScenarioUtils.loadScenario(config) ;
 
-		// possibly modify scenario here
-		
-		// ---
-		
+
+		// -------- Controller --------
 		Controler controler = new Controler( scenario ) ;
-		
-		// possibly modify controler here
-
-//		controler.addOverridingModule( new OTFVisLiveModule() ) ;
-
-//		controler.addOverridingModule( new SimWrapperModule() );
-		
-		// ---
-		
 		controler.run();
 	}
-	
 }
